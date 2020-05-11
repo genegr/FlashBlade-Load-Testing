@@ -1,0 +1,21 @@
+- name: Cleanup hosts entry points
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: delete directory "{{ basedir }}"
+      file:
+        path: "{{ basedir }}"
+        state: absent
+
+- name: Delete NFS share on FlashBlade
+  hosts: localhost
+  collections:
+    - purestorage.flashblade
+  tasks:
+  - name: remove NFS share "{{ nfs_share }}"
+    purefb_fs:
+      name: "{{ nfs_share }}"
+      state: absent
+      eradicate: true
+      fb_url: "{{ fb_mgnt }}"
+      api_token: "{{ api_token }}"

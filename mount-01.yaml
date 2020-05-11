@@ -1,0 +1,9 @@
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: mount NFS datastore
+      mount:
+        path: /kvm-datastores
+        src: 192.168.4.100:/KVM-test-datastores
+        fstype: nfs4
+        state: mounted

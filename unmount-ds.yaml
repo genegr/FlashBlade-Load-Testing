@@ -1,0 +1,10 @@
+- name: Unmount KVM datastores
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: Unmount NFS datastore 
+      mount:
+        path: "{{ basedir }}/{{ item }}"
+        fstype: nfs4
+        state: unmounted
+      loop: "{{ datastores }}"

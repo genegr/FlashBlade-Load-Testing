@@ -1,0 +1,36 @@
+all:
+  vars:
+    fb_mgnt: 10.225.112.69
+    api_token: T-2b74f9eb-a35f-40d9-a6a6-33c13775a53c
+    nfs_ip:
+      - 192.168.4.100
+      - 192.168.4.101
+      - 192.168.4.102
+      - 192.168.4.103
+      - 192.168.5.100
+      - 192.168.5.101
+      - 192.168.5.102
+      - 192.168.5.103
+      - 192.168.6.100
+      - 192.168.6.101
+      - 192.168.6.102
+      - 192.168.6.103
+      - 192.168.7.100
+      - 192.168.7.101
+      - 192.168.7.102
+      - 192.168.7.103
+    nfs_share: "KVM-test-datastores"
+    nfs_share_size: 1T
+    basedir: "/kvm-datastores/"
+    datastores:
+      - datastore01
+      - datastore02
+  hosts:
+    z-fbhost1:
+      ansible_host: 10.225.112.63
+    z-fbhost2:
+      ansible_host: 10.225.112.71
+    z-fbhost3:
+      ansible_host: 10.225.112.121
+    z-fbhost4:
+      ansible_host: 10.225.112.122

@@ -1,0 +1,11 @@
+- name: Mount KVM datastores
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: mount NFS datastore 
+      mount:
+        path: "{{ basedir }}/{{ item }}"
+        src: "{{ nfs_ip|random }}:/{{ nfs_share }}/{{ item }}"
+        fstype: nfs4
+        state: mounted
+      loop: "{{ datastores }}"

@@ -1,0 +1,46 @@
+- name: Create NFS share on FlashBlade
+  hosts: localhost
+  collections:
+    - purestorage.flashblade
+  tasks:
+  - name: Create new filesystem to host KVM datastores
+    purefb_fs:
+      name: "{{ nfs_share }}"
+      size: "{{ nfs_share_size }}"
+      state: present
+      nfsv3 : false
+      nfsv4 : true
+      fb_url: "{{ fb_mgnt }}"
+      api_token: "{{ api_token }}"
+
+- name: Create entry points on KVM hosts
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: create directories
+      file:
+        path: "{{ basedir }}/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop: "{{ datastores }}"
+
+- name: Create KVM datastores
+  hosts: z-fbhost1
+  remote_user: root
+  tasks:
+    - name: mount NFS datastore
+      mount:
+        path: "{{ basedir }}"
+        src: "{{ nfs_ip[0] }}:/{{ nfs_share }}"
+        fstype: nfs4
+        state: mounted
+    - name: create datastores
+      file:
+        path: "{{ basedir }}/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop: "{{ datastores }}"
+    - name: unmount NFS datastore
+      mount:
+        path: "{{ basedir }}"
+        state: unmounted
