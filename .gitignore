@@ -20,5 +20,6 @@ dmypy.json
 .vscode/
 
 # terraform
+.terraform/
 terraform.tfstate
 terraform.tfstate.backup
