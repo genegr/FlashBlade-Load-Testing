@@ -9,3 +9,9 @@
         fstype: nfs4
         state: mounted
       loop: "{{ datastores }}"
+    - name: change directory ownership
+      file:
+        path: "{{ basedir }}/{{ item }}"
+        owner: "{{ datastore_owner }}"
+        group: "{{ datastore_owner }}"
+      loop: "{{ datastores }}"

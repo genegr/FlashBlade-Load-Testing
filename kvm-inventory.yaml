@@ -23,8 +23,11 @@ all:
     nfs_share_size: 1T
     basedir: "/kvm-datastores/"
     datastores:
+      - templates
       - datastore01
       - datastore02
+    datastore_owner: "qemu"
+    datastore_group: "qemu"
   hosts:
     z-fbhost1:
       ansible_host: 10.225.112.63
